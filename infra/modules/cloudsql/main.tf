@@ -5,6 +5,7 @@ resource "google_compute_global_address" "private_ip_address" {
   address_type  = "INTERNAL"
   prefix_length = var.prefix_length
   network       = var.network_id
+  project       = var.project_id
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
@@ -19,8 +20,9 @@ resource "random_id" "db_name_suffix" {
 }
 
 resource "google_sql_database_instance" "instance" {
+  project          = var.project_id
   provider         = google-beta
-  name             = "${var.name_prefix}-instance-${random_id.db_name_suffix.hex}"
+  name             = "${var.name_prefix}-${random_id.db_name_suffix.hex}"
   region           = var.region
   database_version = var.database_version
 
@@ -34,4 +36,5 @@ resource "google_sql_database_instance" "instance" {
       enable_private_path_for_google_cloud_services = var.enable_private_path
     }
   }
+  deletion_protection = false
 }

@@ -1,4 +1,7 @@
-# variables.tf
+variable "project_id" {
+  type = string
+}
+
 variable "network_id" {
   description = "Name of the VPC network for private IP connectivity"
   type        = string

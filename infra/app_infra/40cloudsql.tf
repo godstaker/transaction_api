@@ -1,5 +1,6 @@
 module "block_db" {
   source              = "../modules/cloudsql"
+  project_id          = var.project_id
   name_prefix         = var.name_prefix
   prefix_length       = var.prefix_length
   network_id          = module.app_vpc.vpc_network_id

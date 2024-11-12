@@ -36,7 +36,7 @@ This repository contains the solution for automating the CI/CD pipeline and clou
 
 The architecture follows a modular design with separate pipelines for application deployment and infrastructure provisioning. Here’s a high-level diagram:
 
-![architecture](https://github.com/user-attachments/assets/56431d4c-5dd0-4b70-8c85-ca0058a65ea9)
+![transaction_api](https://github.com/user-attachments/assets/cbf227e6-912a-4f6d-8b95-1c5578787c39)
 
 
 1. **CI/CD Pipeline for Application**:

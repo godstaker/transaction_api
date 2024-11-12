@@ -46,7 +46,11 @@ The architecture follows a modular design with separate pipelines for applicatio
    - Deploys the application to the specified cloud environment.
 
 2. **Infrastructure Deployment Pipeline**:
-   - Uses IaC to create cloud resources.
+   - Uses IaC to create cloud resources:
+      1. Google apis
+      2. Custom VPC/Subnet
+      3. GKE Cluster(autopilot, gke sa)
+      4. Cloudsql(Private IP)
    - Includes resources like VPC, load balancers, container orchestration services (e.g., GKE).
    - Enables scaling through auto-scaling policies.
    - Configures monitoring, logging, and auditing.

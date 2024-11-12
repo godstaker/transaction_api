@@ -6,10 +6,6 @@ on:
       confirm_destroy:
         description: "Type 'destroy' to confirm"
         required: true
-      destroy_module:
-        description: "Optional: Specify a module to destroy (leave empty to destroy the whole platform)"
-        required: false
-        default: ""
 
 jobs:
   terraform:
@@ -37,18 +33,11 @@ jobs:
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    # Check if the 'destroy' input is given, and destroy the specified module or the whole platform
+    # Generates an execution plan for Terraform
     - name: Terraform Destroy
       if: github.event.inputs.confirm_destroy == 'destroy'
       working-directory: infra/app_infra
-      run: |
-        if [[ -n "${{ github.event.inputs.destroy_module }}" ]]; then
-          echo "Destroying module: ${{ github.event.inputs.destroy_module }}"
-          terraform destroy -auto-approve -target="${{ github.event.inputs.destroy_module }}"
-        else
-          echo "Destroying the entire platform"
-          terraform destroy -auto-approve
-        fi
+      run: terraform destroy -auto-approve 
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TF_VAR_gcs_tf_bucket: ${{ secrets.GCS_TF_BUCKET }}

@@ -49,9 +49,8 @@ The architecture follows a modular design with separate pipelines for applicatio
    - Uses IaC to create cloud resources:
       1. Google apis
       2. Custom VPC/Subnet
-      3. GKE Cluster(autopilot, gke sa)
+      3. GKE Cluster(autopilot, gke sa, Load Balancers)
       4. Cloudsql(Private IP)
-   - Includes resources like VPC, load balancers, container orchestration services (e.g., GKE).
    - Enables scaling through auto-scaling policies.
    - Configures monitoring, logging, and auditing.
 

@@ -8,6 +8,7 @@ This repository contains the solution for automating the CI/CD pipeline and clou
 - A CI/CD pipeline for deploying a containerised Flask api, in a GKE Cluster(TBC).
 - Monitoring, auditing, and scaling capabilities to ensure the application meets production standards(TBC).
 - In this scenario, a regional autopilot gke cluster is being used and different namespaces (dev, pro) to represent different environments(TBC)
+TBC: To Be Completed
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)

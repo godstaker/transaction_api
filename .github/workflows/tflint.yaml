@@ -1,0 +1,61 @@
+name: Terraform Lint Check
+
+# Run this workflow on pull requests to the main branch
+on:
+  pull_request:
+    branches:
+      - main  # Update to match your default branch
+    paths:
+    - infra/app_infra/**
+    - infra/modules/**
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Terraform Lint Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0  # Adjust the version if necessary
+          
+      # Initialize a new or existing Terraform working directory by creating initial files
+      - name: Terraform Init
+        working-directory: infra/app_infra
+        run: terraform init -backend-config="bucket=${{ secrets.GCS_TF_BUCKET }}"
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    # Initialize a new or existing Terraform working directory by creating initial files
+      - name: Terraform Init
+        working-directory: infra/app_infra
+        run: terraform init -backend-config="bucket=${{ secrets.GCS_TF_BUCKET }}"
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      # Step 3: Install tflint
+      - name: Install tflint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      # Step 4: Run tflint
+      - name: Run tflint
+        run: tflint
+        working-directory: infra/app_infra  # Update if your Terraform files are not in the root
+
+      # Optional Step 5: Terraform Format Check
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+        working-directory: infra/app_infra
+
+      # Optional Step 6: Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: infra/app_infra

@@ -69,3 +69,8 @@ variable "enable_private_path" {
   type        = bool
   default     = true
 }
+
+variable "db_name" {
+  type        = string
+  description = "Database name"
+}

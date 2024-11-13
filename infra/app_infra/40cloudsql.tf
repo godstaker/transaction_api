@@ -9,4 +9,5 @@ module "block_db" {
   instance_tier       = var.instance_tier
   network_self_link   = module.app_vpc.vpc_network_self_link
   enable_private_path = var.enable_private_path
+  db_name             = var.db_name
 }

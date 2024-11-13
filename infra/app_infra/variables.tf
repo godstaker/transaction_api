@@ -1,3 +1,8 @@
+variable "gcs_tf_bucket" {
+  description = "The GCS bucket used for Terraform state"
+  type        = string
+}
+
 variable "project_id" {
   description = "The ID of the project where APIs will be enabled"
   type        = string

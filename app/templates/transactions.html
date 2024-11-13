@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Records</title>
+    <style>
+        table { width: 50%; border-collapse: collapse; margin: 20px auto; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center">Transaction Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody id="transactions-table-body">
+            <!-- Transactions will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        async function loadTransactions() {
+            const response = await fetch('/api/transactions');
+            const transactions = await response.json();
+
+            const tableBody = document.getElementById('transactions-table-body');
+            tableBody.innerHTML = '';
+
+            transactions.forEach(tx => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${tx.transaction_id}</td>
+                    <td>${tx.amount}</td>
+                    <td>${tx.timestamp}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        window.onload = loadTransactions;
+    </script>
+</body>
+</html>

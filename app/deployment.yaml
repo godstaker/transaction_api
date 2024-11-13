@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev  # Namespace for the application
+  labels:
+    name: dev  # Optional: Label for organization
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-app-dev
+  namespace: dev  # Specify the namespace here
+  labels:
+    app: transaction-app
+    environment: dev
+spec:
+  replicas: 3  # Number of pod replicas (adjust as needed for scaling)
+  selector:
+    matchLabels:
+      app: transaction-app
+  template:
+    metadata:
+      labels:
+        app: transaction-app
+        environment: dev
+    spec:
+      containers:
+        - name: transaction-app
+          image: gcr.io/<your-project-id>/transaction-app:latest  # Replace with your image URL
+          ports:
+            - containerPort: 5000  # Flask app listens on port 5000 inside the container
+          env:
+            - name: FLASK_ENV
+              value: "development"  # Set environment variable specific to the app's environment
+            - name: DATABASE_URI
+              value: "sqlite:///db.sqlite"  # Change if using another DB (e.g., Cloud SQL)
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          imagePullPolicy: Always  # Always pull the latest image (or use "IfNotPresent" in production)
+          readinessProbe:  # Health check to ensure the app is ready
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:  # Health check to restart pods if they become unresponsive
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-app-service-dev  # Name of the service
+  namespace: dev  # Specify the namespace here
+spec:
+  type: LoadBalancer  # Exposes the service externally via a LoadBalancer
+  selector:
+    app: transaction-app  # Match the deployment app label
+  ports:
+    - protocol: TCP
+      port: 80  # External port exposed by the LoadBalancer
+      targetPort: 5000  # Internal port of the Flask app inside the container

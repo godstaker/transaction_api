@@ -38,3 +38,9 @@ resource "google_sql_database_instance" "instance" {
   }
   deletion_protection = false
 }
+
+resource "google_sql_database" "database" {
+  name            = "${var.db_name}${random_id.db_name_suffix.hex}"
+  instance        = google_sql_database_instance.instance.name
+  deletion_policy = "DELETE"
+}

@@ -5,9 +5,9 @@
 
 This repository contains the solution for automating the CI/CD pipeline and cloud infrastructure deployment for a cloud-native application. The solution includes:
 - Infrastructure-as-Code (IaC) deployment for provisioning required cloud infrastructure using [GCP].
-- A CI/CD pipeline for deploying a containerised Flask api, in a GKE Cluster(TBC).
-- Monitoring, auditing, and scaling capabilities to ensure the application meets production standards(TBC).
-- In this scenario, a regional autopilot gke cluster is being used and different namespaces (dev, pro) to represent different environments(TBC)
+- A CI/CD pipeline for deploying a containerised Flask api, in a GKE Cluster.
+- Monitoring, auditing, and scaling capabilities to ensure the application meets production standards.
+- In this scenario, a regional autopilot gke cluster is being used and different namespaces (dev, pro) to represent different environments
 TBC: To Be Completed
 
 ## Table of Contents
@@ -35,10 +35,10 @@ TBC: To Be Completed
 
 ## Architecture
 
-The architecture follows a modular design with separate pipelines for application deployment and infrastructure provisioning. Here’s a high-level diagram:
+The architecture follows a modular design with separate pipelines for application deployment and infrastructure provisioning. The application is currently fully deployed on GKE. Here’s a high-level diagram:
 
 ![transaction_api](https://github.com/user-attachments/assets/cbf227e6-912a-4f6d-8b95-1c5578787c39)
-
+**Note: The Cloudsql instance is not actually being used, it is to be completed at a later stage to decouple the application**
 
 1. **CI/CD Pipeline for Application**:
    - Triggers on code commits, to the the Main branch.
@@ -51,7 +51,7 @@ The architecture follows a modular design with separate pipelines for applicatio
       1. Google apis
       2. Custom VPC/Subnet
       3. GKE Cluster(autopilot, gke sa, Load Balancers)
-      4. Cloudsql(Private IP)
+      4. Cloudsql(Private IP)**(Not currently in use)**
    - Enables scaling through auto-scaling policies.
    - Configures monitoring, logging, and auditing.
 

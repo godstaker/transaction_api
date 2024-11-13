@@ -35,7 +35,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files
       - name: Terraform Init
-        working-directory: infra/app_infra
+        working-directory: infra/modules
         run: terraform init -backend-config="bucket=${{ secrets.GCS_TF_BUCKET }}"
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
@@ -45,17 +45,32 @@ jobs:
         run: |
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-      # Step 4: Run tflint
-      - name: Run tflint
+      # Step 4: Run tflint for app_infra
+      - name: Run tflint for app_infra
         run: tflint
-        working-directory: infra/app_infra  # Update if your Terraform files are not in the root
+        working-directory: infra/app_infra 
 
-      # Optional Step 5: Terraform Format Check
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+      # Step 5: Run tflint for modules
+      - name: Run tflint for modules
+        run: tflint
+        working-directory: infra/modules  
+
+      # Optional Step 6: Terraform Format
+      - name: Terraform Format app_infra
+        run: terraform fmt -recursive
         working-directory: infra/app_infra
 
-      # Optional Step 6: Terraform Validate
-      - name: Terraform Validate
+      # Optional Step 7: Terraform Validate
+      - name: Terraform Validate app_infra
         run: terraform validate
         working-directory: infra/app_infra
+
+      # Optional Step 8: Terraform Format 
+      - name: Terraform Format modules
+        run: terraform fmt -recursive
+        working-directory: infra/modules
+
+      # Optional Step 9: Terraform Validate
+      - name: Terraform Validate modules
+        run: terraform validate
+        working-directory: infra/modules

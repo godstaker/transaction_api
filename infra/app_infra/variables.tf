@@ -39,6 +39,8 @@ variable "repository_id" {
   type        = string
 }
 
+##CloudSQL###
+/*
 variable "name_prefix" {
   description = "Prefix for naming resources created by the module"
   type        = string
@@ -73,3 +75,4 @@ variable "db_name" {
   type        = string
   description = "Database name"
 }
+*/

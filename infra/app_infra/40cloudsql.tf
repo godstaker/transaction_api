@@ -1,3 +1,5 @@
+##To be completed, for decoupling at a later stage##
+/**
 module "block_db" {
   source              = "../modules/cloudsql"
   project_id          = var.project_id
@@ -11,3 +13,4 @@ module "block_db" {
   enable_private_path = var.enable_private_path
   db_name             = var.db_name
 }
+**/

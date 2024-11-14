@@ -6,7 +6,6 @@ variable "gcs_tf_bucket" {
 variable "project_id" {
   description = "The ID of the project where APIs will be enabled"
   type        = string
-  default     = ""
 }
 
 variable "network_name" {

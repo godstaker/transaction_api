@@ -11,6 +11,13 @@ resource "google_container_cluster" "this" {
   enable_autopilot         = true
   enable_l4_ilb_subsetting = true
 
+  # Enable Managed Prometheus
+  monitoring_config {
+    managed_prometheus {
+      enabled = true
+    }
+  }
+
   # Enable Private Cluster if you want additional network security (optional)
   private_cluster_config {
     enable_private_nodes   = true
@@ -24,7 +31,8 @@ resource "google_container_cluster" "this" {
     service_account = google_service_account.this.account_id
     tags            = var.node_tags
   }
-  deletion_protection      = false
+
+  deletion_protection = false
 }
 
 resource "google_service_account" "this" {
@@ -37,5 +45,18 @@ resource "google_service_account" "this" {
 resource "google_project_iam_member" "this" {
   project = var.project_id
   role    = "roles/cloudsql.client"
+  member  = "serviceAccount:${google_service_account.this.email}"
+}
+
+# Additional IAM permissions for monitoring with Managed Prometheus
+resource "google_project_iam_member" "monitoring_viewer" {
+  project = var.project_id
+  role    = "roles/monitoring.viewer"
+  member  = "serviceAccount:${google_service_account.this.email}"
+}
+
+resource "google_project_iam_member" "monitoring_metric_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${google_service_account.this.email}"
 }

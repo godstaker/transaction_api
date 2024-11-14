@@ -50,12 +50,16 @@ The architecture follows a modular design with separate pipelines for applicatio
    - Uses IaC to create cloud resources:
       1. Google apis
       2. Custom VPC/Subnet
-      3. GKE Cluster(autopilot, gke sa, Load Balancers)
-      4. Cloudsql(Private IP)**(Not currently in use)**
+      3. GKE Cluster(autopilot, gke sa, Load Balancers, managed Prometheus)
+      4. Cloudsql(Private IP)**(Not currently in use, To be completed)**
    - Enables scaling through auto-scaling policies.
-   - Configures monitoring, logging, and auditing.
+   - Configures monitoring(Managed Prometheus/Cloud monitoring), logging, and auditing.
 
 ## Setup and Configuration
 
-1. **Clone the Repositories**:
+1. **Clone the Repository**:
 2. **Use either tfvars or vars to define values**
+3. **First deploy the infrastructure, via the pipeline**
+4. **Build the application container(Docker) image**
+5. **Push the Container image to the container/artifact repository**
+6. **Deploy the manifest file(s), either via the pipeline or using kubectl**

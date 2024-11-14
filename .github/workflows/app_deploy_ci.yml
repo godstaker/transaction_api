@@ -1,0 +1,46 @@
+name: Application CI (DEV)
+
+on:
+  push:
+    branches:
+    - main  # Trigger on push to main branch
+    paths:
+    - app/**  # Trigger if there are changes in the dev folder
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Set up Google Cloud SDK
+      - name: Install the Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          install_components: 'gke-gcloud-auth-plugin'
+
+      - name: Authenticate with service account
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_GKE_SA }}  # Base64-encoded service account key
+          project_id: ${{ secrets.PROJECT_ID }}  # Your GCP project ID
+
+      # Install kubectl
+      - name: Install kubectl
+        run: |
+          sudo apt-get install -y kubectl
+
+      # Configure kubectl to use GKE credentials
+      - name: Get GKE Credentials
+        run: |
+          gcloud container clusters get-credentials webapp01 --zone europe-west2 --project ${{ secrets.PROJECT_ID }}
+
+      - name: Deploy to Kubernetes (dev)
+        working-directory: app/
+        run: |
+          kubectl apply -f deployment.yaml

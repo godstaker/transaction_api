@@ -31,14 +31,14 @@ TBC: To Be Completed
 - Required permissions for infrastructure provisioning, monitoring, and deployment.
 - Docker, Terraform and Git installed locally.
 - VSCode or any alternative of your preference
-- Preferred IaC tool: Terraform, Github action for CI.
+- IaC tool: Terraform, Github action for CI.
 
 ## Architecture
 
 The architecture follows a modular design with separate pipelines for application deployment and infrastructure provisioning. The application is currently fully deployed on GKE. Here’s a high-level diagram:
 
 ![transaction_api](https://github.com/user-attachments/assets/cbf227e6-912a-4f6d-8b95-1c5578787c39)
-**Note: The Cloudsql instance is not actually being used, it is to be completed at a later stage to decouple the application**
+**Note: The Cloudsql instance is not actually being used, it is to be completed at a later stage to decouple the application and improve reliability**
 
 1. **CI/CD Pipeline for Application**:
    - Triggers on code commits, to the the Main branch.
@@ -62,4 +62,7 @@ The architecture follows a modular design with separate pipelines for applicatio
 3. **First deploy the infrastructure, via the pipeline**
 4. **Build the application container(Docker) image**
 5. **Push the Container image to the container/artifact repository**
-6. **Deploy the manifest file(s), either via the pipeline or using kubectl**
+6. **Deploy the manifest file(s), either via the pipeline or using kubectl. The Deployment manifest contains both the deployment of the application as well as exposing the service via a load balancer**
+
+## Roadmap
+The aspiration is to decouple the application and use Cloudsql Posgres SQL for the database, to improve reliability and minimise failure.

@@ -42,7 +42,7 @@ The architecture follows a modular design with separate pipelines for applicatio
 Rationale: 
 Automated IaC pipeline is used to deployed the underlying Cloud infrastructure and components, to minimise manual intervention and critically to improve repeatability. A modular approached has been used for Terraform, to follow the DRY(Do Not Reapeat Yourself) principle and hence neater and leaner code. The Terraform state file is hosted in a GCS bucket, so as to have one source of truth and prevent code drift.
 Currently the platform is deployed in **europe-west2*, which can be easily modified to deploy across any other region.
-GKE autopilot(Private cluster) is being used to host the application, so as to minimised management overheads and improve security posture of the application. In this scenario managed Prometheus is used in conjunction with the GKE autopilot cluster, to automatically monitor the cluster for any latency and potential issues.
+GKE autopilot(Private cluster) is being used to host the application; this is to minimised complexities, while autoscaling and improve security posture of the application. In this scenario managed Prometheus is used in conjunction with the GKE autopilot cluster, to automatically monitor the cluster for any latency and potential issues.
 
 Github is for code repositories and Github Actions is used to create CI pipeline for deployments, this is to minimise overheads and also have any secrets securely stored in Github.
 

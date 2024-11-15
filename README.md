@@ -37,8 +37,14 @@ TBC: To Be Completed
 
 The architecture follows a modular design with separate pipelines for application deployment and infrastructure provisioning. The application is currently fully deployed on GKE. Here’s a high-level diagram:
 
-![transaction_api](https://github.com/user-attachments/assets/cbf227e6-912a-4f6d-8b95-1c5578787c39)
-**Note: The Cloudsql instance is not actually being used, it is to be completed at a later stage to decouple the application and improve reliability**
+![transaction_api](https://github.com/user-attachments/assets/cbf227e6-912a-4f6d-8b95-1c5578787c39) **Note: The Cloudsql instance is not actually being used, it is to be completed at a later stage to decouple the application and improve reliability**
+
+Rationale: 
+Automated IaC pipeline is used to deployed the underlying Cloud infrastructure and components, to minimise manual intervention and critically to improve repeatability. A modular approached has been used for Terraform, to follow the DRY(Do Not Reapeat Yourself) principle and hence neater and leaner code. The Terraform state file is hosted in a GCS bucket, so as to have one source of truth and prevent code drift.
+Currently the platform is deployed in **europe-west2*, which can be easily modified to deploy across any other region.
+GKE autopilot(Private cluster) is being used to host the application, so as to minimised management overheads and improve security posture of the application. In this scenario managed Prometheus is used in conjunction with the GKE autopilot cluster, to automatically monitor the cluster for any latency and potential issues.
+
+As mentioned above Cloudsql is not currently being used, but will be used at a later stage, as the application is currently not decoupled.
 
 1. **CI/CD Pipeline for Application**:
    - Triggers on code commits, to the the Main branch.

@@ -65,4 +65,5 @@ The architecture follows a modular design with separate pipelines for applicatio
 6. **Deploy the manifest file(s), either via the pipeline or using kubectl. The Deployment manifest contains both the deployment of the application as well as exposing the service via a load balancer**
 
 ## Roadmap
-The aspiration is to decouple the application and use Cloudsql Posgres SQL for the database, to improve reliability and minimise failure.
+**The aspiration is to decouple the application and use Cloudsql Posgres SQL for the database, to improve reliability and minimise failure.**
+**The application code needs to modular as well**

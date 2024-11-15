@@ -44,6 +44,8 @@ Automated IaC pipeline is used to deployed the underlying Cloud infrastructure a
 Currently the platform is deployed in **europe-west2*, which can be easily modified to deploy across any other region.
 GKE autopilot(Private cluster) is being used to host the application, so as to minimised management overheads and improve security posture of the application. In this scenario managed Prometheus is used in conjunction with the GKE autopilot cluster, to automatically monitor the cluster for any latency and potential issues.
 
+Github is for code repositories and Github Actions is used to create CI pipeline for deployments, this is to minimise overheads and also have any secrets securely stored in Github.
+
 As mentioned above Cloudsql is not currently being used, but will be used at a later stage, as the application is currently not decoupled.
 
 1. **CI/CD Pipeline for Application**:

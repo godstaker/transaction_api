@@ -73,5 +73,5 @@ As mentioned above Cloudsql is not currently being used, but will be used at a l
 6. **replace values where required and deploy the manifest file(s), either via the pipeline or using kubectl. The Deployment manifest contains both the deployment of the application as well as exposing the service via a load balancer**
 
 ## Roadmap
-**The aspiration is to decouple the application and use Cloudsql Posgres SQL for the database, to improve reliability and minimise failure.**
+**The aspiration is to decouple the application and use Cloudsql Posgres SQL for the database, to improve reliability, backup and minimise failure.**
 **The application code needs to modular as well**
